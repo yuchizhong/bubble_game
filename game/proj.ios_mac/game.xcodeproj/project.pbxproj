@@ -60,6 +60,7 @@
 		AB1CF6AA1A2CBEFE00339E6F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CF6A91A2CBEFE00339E6F /* OpenGLES.framework */; };
 		ABA9FCA01A2E0DC4005483FB /* bubble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABA9FC9E1A2E0DC4005483FB /* bubble.cpp */; };
 		ABA9FCA11A2E0DC4005483FB /* bubble.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABA9FC9E1A2E0DC4005483FB /* bubble.cpp */; };
+		ABABC6E11A32BF3600A7E684 /* overScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABABC6DF1A32BF3600A7E684 /* overScene.cpp */; };
 		ABC8B5F41A2F68A4006BEE95 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABC8B5F21A2F68A4006BEE95 /* game.cpp */; };
 		ABC8B5F71A2F68AC006BEE95 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABC8B5F21A2F68A4006BEE95 /* game.cpp */; };
 		ABDE7B8C1A31A2900024E01D /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDE7B7E1A31A2900024E01D /* fire.png */; };
@@ -276,6 +277,8 @@
 		AB1CF6A91A2CBEFE00339E6F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		ABA9FC9E1A2E0DC4005483FB /* bubble.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bubble.cpp; path = ../Classes/bubble.cpp; sourceTree = "<group>"; };
 		ABA9FC9F1A2E0DC4005483FB /* bubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bubble.h; path = ../Classes/bubble.h; sourceTree = "<group>"; };
+		ABABC6DF1A32BF3600A7E684 /* overScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = overScene.cpp; sourceTree = "<group>"; };
+		ABABC6E01A32BF3600A7E684 /* overScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overScene.h; sourceTree = "<group>"; };
 		ABC8B5F21A2F68A4006BEE95 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
 		ABC8B5F31A2F68A4006BEE95 /* game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game.h; sourceTree = "<group>"; };
 		ABDE7B7E1A31A2900024E01D /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
@@ -374,6 +377,8 @@
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				ABC8B5F21A2F68A4006BEE95 /* game.cpp */,
 				ABC8B5F31A2F68A4006BEE95 /* game.h */,
+				ABABC6DF1A32BF3600A7E684 /* overScene.cpp */,
+				ABABC6E01A32BF3600A7E684 /* overScene.h */,
 				ABDE7B9A1A31AD910024E01D /* startScene.cpp */,
 				ABDE7B9B1A31AD910024E01D /* startScene.h */,
 				1AFAF8B516D35DE700DB1158 /* mainScene.cpp */,
@@ -730,6 +735,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				ABABC6E11A32BF3600A7E684 /* overScene.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				ABC8B5F41A2F68A4006BEE95 /* game.cpp in Sources */,
 				ABDE7B9C1A31AD910024E01D /* startScene.cpp in Sources */,

@@ -1,5 +1,5 @@
-#ifndef __MAIN_SCENE_H__
-#define __MAIN_SCENE_H__
+#ifndef __OVER_SCENE_H__
+#define __OVER_SCENE_H__
 
 #include "cocos2d.h"
 #include "bubble.h"
@@ -8,14 +8,7 @@
 
 using namespace std;
 
-#define TIME_RATE 1.0
-
-class mainScene : public cocos2d::Layer {
-    list<bubble*> bubbles;
-    
-    cocos2d::LabelTTF *lifeLabel;
-    cocos2d::LabelTTF *scoreLabel;
-    
+class overScene : public cocos2d::Layer {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
@@ -24,12 +17,10 @@ public:
     virtual bool init();  
     
     // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
+    void startGame(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(mainScene);
-    
-    virtual void update(float tDelta);
+    CREATE_FUNC(overScene);
     
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
 };

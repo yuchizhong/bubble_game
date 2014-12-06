@@ -14,7 +14,7 @@
 #define GAMEOVER    2
 #define PAUSED      3
 
-#define MAXERROR 3
+#define MAXERROR 5
 
 #include <string>
 #include "cocos2d.h"
@@ -23,6 +23,7 @@ using namespace std;
 
 class game {
 public:
+    int halo;
     int status;
     int score;
     int error_count;
@@ -38,6 +39,7 @@ public:
     bool overOnError();
     void gameOver();
     void timePassed(float dt);
+    void setHalo(int withHalo);
 };
 
-#endif /* defined(__game__game__) */
+#endif

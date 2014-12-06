@@ -8,6 +8,7 @@
 
 #include "game.h"
 #include "mainScene.h"
+#include "overScene.h"
 
 game *_manager = NULL;
 
@@ -63,10 +64,17 @@ bool game::overOnError() {
 
 void game::gameOver() {
     sharedGameManager()->status = GAMEOVER;
+    auto director = cocos2d::Director::getInstance();
+    auto scene = overScene::createScene();
+    director->replaceScene(scene);
 }
 
 void game::timePassed(float dt) {
     if (sharedGameManager()->status == INGAME) {
         sharedGameManager()->time_passed += dt;
     }
+}
+
+void game::setHalo(int withHalo) {
+    halo = withHalo;
 }

@@ -107,7 +107,7 @@ bool mainScene::init()
     
     auto sprite = Sprite::create("xxh-bg.png");
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-    sprite->setScale(1136.0/1920.0, 1136.0/1920.0);
+    sprite->setScale(visibleSize.height/1920.0, visibleSize.height/1920.0);
     this->addChild(sprite, 0);
     
     auto lifeImg = Sprite::create("生命.png");
@@ -115,7 +115,7 @@ bool mainScene::init()
     this->addChild(lifeImg, 2);
     
     lifeLabel = LabelTTF::create("体力 5", "Arial", 26);
-    lifeLabel->setPosition(Vec2(lifeImg->getContentSize().width / 1.5, lifeImg->getContentSize().height / 2.0));
+    lifeLabel->setPosition(Vec2(lifeImg->getContentSize().width / 1.5, lifeImg->getContentSize().height / 2.0 - 1));
     lifeImg->addChild(lifeLabel, 2);
     
     auto scoreImg = Sprite::create("分数.png");
@@ -123,7 +123,7 @@ bool mainScene::init()
     this->addChild(scoreImg, 2);
     
     scoreLabel = LabelTTF::create("0", "Arial", 26);
-    scoreLabel->setPosition(Vec2(scoreImg->getContentSize().width / 1.5, scoreImg->getContentSize().height / 2.0));
+    scoreLabel->setPosition(Vec2(scoreImg->getContentSize().width / 1.5, scoreImg->getContentSize().height / 2.0 - 1));
     scoreImg->addChild(scoreLabel, 2);
     /*
     auto pauseItem = MenuItemImage::create(
@@ -262,7 +262,7 @@ void mainScene::update(float tDelta) {
         }
     }
     
-    int life = 5 - game::sharedGameManager()->error_count;
+    int life = MAXERROR - game::sharedGameManager()->error_count;
     char lifeStr[2];
     sprintf(lifeStr, "%d", life);
     lifeLabel->setString("体力 " + string(lifeStr));

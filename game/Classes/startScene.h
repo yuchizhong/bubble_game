@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __START_SCENE_H__
+#define __START_SCENE_H__
 
 #include "cocos2d.h"
 #include "bubble.h"
@@ -7,8 +7,6 @@
 #include <list>
 
 using namespace std;
-
-#define TIME_RATE 1.0
 
 class startScene : public cocos2d::Layer {
 public:
@@ -25,6 +23,10 @@ public:
     CREATE_FUNC(startScene);
     
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    
+    int selectedHalo;
+    cocos2d::Sprite *halo[3];
+    cocos2d::Vec2 haloPosn[3];
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif
