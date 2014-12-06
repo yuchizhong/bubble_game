@@ -21,10 +21,12 @@ public:
     float current_x, current_y;
     float delta_x, delta_y;
     float current_r, r_rate;
+    float current_angle, angle_rate;
     float timePassed;
     cocos2d::Node *container;
     
     static bubble* create(string texture, float x, float y, float startingRadius, float rate, float dx, float dy);
+    void setRotation(float init_ro, float ro_rate);
     void update(float dt);
     
     void onDeath(bool punish);

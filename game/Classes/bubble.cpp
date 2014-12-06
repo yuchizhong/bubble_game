@@ -32,12 +32,20 @@ bubble* bubble::create(string texture, float x, float y, float startingRadius, f
     return nullptr;
 }
 
+void bubble::setRotation(float init_ro, float ro_rate) {
+    current_angle = init_ro;
+    angle_rate = ro_rate;
+    this->cocos2d::Sprite::setRotation(current_angle);
+}
+
 void bubble::update(float dt) {
     current_x += delta_x * dt;
     current_y += delta_y * dt;
     current_r *= 1.0 + this->r_rate * dt;
+    current_angle += angle_rate * dt;
     this->setPosition(this->current_x, this->current_y);
     this->setScale(this->current_r, this->current_r);
+    this->cocos2d::Sprite::setRotation(current_angle);
 }
 
 void bubble::onDeath(bool punish) {

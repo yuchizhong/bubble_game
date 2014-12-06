@@ -210,6 +210,7 @@ void mainScene::update(float tDelta) {
         bubble *b = bubble::create(filename, x, y,
                                    r, 0.1 + 0.001 * (float)getRand(0, 30),
                                    10 - (float)getRand(0, 20), 10 - (float)getRand(0, 20));
+        b->setRotation((float)getRand(0, 360), 5 - (float)getRand(0, 10));
         b->setTag(bubble_tag);
         bubble_tag++;
         b->container = this;
