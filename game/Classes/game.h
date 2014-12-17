@@ -28,6 +28,7 @@ public:
     int score;
     int error_count;
     int correct_count;
+    int difficulty_count;
     float time_passed;
     
     static game* sharedGameManager();
@@ -40,6 +41,7 @@ public:
     void gameOver();
     void timePassed(float dt);
     void setHalo(int withHalo);
+    void resetDifficultyCount();
 };
 
 #endif

@@ -6,6 +6,13 @@
 
 USING_NS_CC;
 
+#define BUBBLE_GAP 20
+
+static int getRand(int start, int end) {
+    float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
+    return (int)i;
+}
+
 Scene* mainScene::createScene()
 {
     // 'scene' is an autorelease object
@@ -32,10 +39,28 @@ bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
             bubbles.remove(*it);
             (*it)->onTouch();
             //this->removeChildByTag((*it)->getTag());
+            bubbleLogic();
             break;
         }
     }
     return false;
+}
+
+void mainScene::bubbleLogic() {
+    if (game::sharedGameManager()->difficulty_count <= 5) {
+        generateBubble();
+    } else if (game::sharedGameManager()->difficulty_count <= 20) {
+        generateBubble();
+        if (getRand(0, 1) == 0) {
+            generateBubble();
+        }
+    } else {
+        generateBubble();
+        generateBubble();
+        if (getRand(0, 1) == 0) {
+            generateBubble();
+        }
+    }
 }
 
 // on "init" you need to initialize your instance
@@ -140,6 +165,8 @@ bool mainScene::init()
     */
     this->scheduleUpdate();
     
+    generateBubble();
+    
     return true;
 }
 
@@ -147,14 +174,7 @@ static float runningTime = 0.0;
 static float lastAddBubbleTime = 0.0;
 static int bubble_tag = 100;
 
-static int getRand(int start, int end) {
-    float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
-    return (int)i;
-}
-
-void mainScene::update(float tDelta) {
-    float tIntVal = tDelta * TIME_RATE;
-    runningTime += tIntVal;
+void mainScene::generateBubble() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     float resize_factor = visibleSize.width / 640.0 * 500.0 / BUBBLE_RADIUS;
     
@@ -162,61 +182,68 @@ void mainScene::update(float tDelta) {
     float boundaryOffsetX = 50;
     float boundaryOffsetY = 80;
     
+    float x, y, r;
+    while (true) {
+        r = 0.1 * resize_factor + 0.001 * resize_factor * (float)getRand(0, 20);
+        float real_r = BUBBLE_RADIUS * r;
+        x = real_r + getRand(boundaryOffsetX, visibleSize.width - 2.0 * real_r - boundaryOffsetX);
+        y = real_r + getRand(boundaryOffsetY, visibleSize.height - 2.0 * real_r - boundaryOffsetY);
+        bool shouldBreak = true;
+        if (bubbles.size() == 0) {
+            break;
+        }
+        for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
+            float dx = abs((*it)->current_x - x);
+            float dy = abs((*it)->current_y - y);
+            float distance = sqrt(dx * dx + dy * dy);
+            float collide_distance = BUBBLE_RADIUS * (*it)->current_r + BUBBLE_RADIUS * r;
+            if (distance < collide_distance + BUBBLE_GAP) {
+                shouldBreak = false;
+                break;
+            }
+        }
+        if (shouldBreak) {
+            break;
+        }
+    }
+    string filename;
+    static int rr = 0;
+    switch (rr) {
+        case 0:
+            filename = "pp1@2x.png";
+            break;
+            
+        case 1:
+            filename = "pp2@2x.png";
+            break;
+            
+        default:
+            filename = "pp3@2x.png";
+            break;
+    }
+    rr++;
+    if (rr == 3) {
+        rr = 0;
+    }
+    
+    bubble *b = bubble::create(filename, x, y,
+                               r, 0.1 + 0.001 * (float)getRand(0, 30),
+                               10 - (float)getRand(0, 20), 10 - (float)getRand(0, 20));
+    b->setRotation((float)getRand(0, 360), 5 - (float)getRand(0, 10));
+    b->setTag(bubble_tag);
+    bubble_tag++;
+    b->container = this;
+    bubbles.push_back(b);
+    this->addChild(b, 1);
+    lastAddBubbleTime = runningTime;
+}
+
+void mainScene::update(float tDelta) {
+    float tIntVal = tDelta * TIME_RATE;
+    runningTime += tIntVal;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
     if (runningTime - lastAddBubbleTime >= 2.0) {
-        float x, y, r;
-        while (true) {
-            r = 0.1 * resize_factor + 0.001 * resize_factor * (float)getRand(0, 20);
-            float real_r = BUBBLE_RADIUS * r;
-            x = real_r + getRand(boundaryOffsetX, visibleSize.width - 2.0 * real_r - boundaryOffsetX);
-            y = real_r + getRand(boundaryOffsetY, visibleSize.height - 2.0 * real_r - boundaryOffsetY);
-            bool shouldBreak = true;
-            if (bubbles.size() == 0) {
-                break;
-            }
-            for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
-                float dx = abs((*it)->current_x - x);
-                float dy = abs((*it)->current_y - y);
-                float distance = sqrt(dx * dx + dy * dy);
-                float collide_distance = BUBBLE_RADIUS * (*it)->current_r + BUBBLE_RADIUS * r;
-                if (distance < collide_distance * 1.5) {
-                    shouldBreak = false;
-                    break;
-                }
-            }
-            if (shouldBreak) {
-                break;
-            }
-        }
-        string filename;
-        static int rr = 0;
-        switch (rr) {
-            case 0:
-                filename = "pp1@2x.png";
-                break;
-                
-            case 1:
-                filename = "pp2@2x.png";
-                break;
-                
-            default:
-                filename = "pp3@2x.png";
-                break;
-        }
-        rr++;
-        if (rr == 3) {
-            rr = 0;
-        }
-        
-        bubble *b = bubble::create(filename, x, y,
-                                   r, 0.1 + 0.001 * (float)getRand(0, 30),
-                                   10 - (float)getRand(0, 20), 10 - (float)getRand(0, 20));
-        b->setRotation((float)getRand(0, 360), 5 - (float)getRand(0, 10));
-        b->setTag(bubble_tag);
-        bubble_tag++;
-        b->container = this;
-        bubbles.push_back(b);
-        this->addChild(b, 1);
-        lastAddBubbleTime = runningTime;
     }
     
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {

@@ -20,6 +20,7 @@ game* game::sharedGameManager() {
         _manager->error_count = 0;
         _manager->correct_count = 0;
         _manager->time_passed = 0;
+        _manager->difficulty_count = 0;
     }
     return _manager;
 }
@@ -30,6 +31,7 @@ void game::start() {
     sharedGameManager()->error_count = 0;
     sharedGameManager()->correct_count = 0;
     sharedGameManager()->time_passed = 0;
+    sharedGameManager()->difficulty_count = 0;
     
     auto director = cocos2d::Director::getInstance();
     auto scene = mainScene::createScene();
@@ -48,6 +50,7 @@ void game::correct(int scoreGet) {
     if (sharedGameManager()->status == INGAME) {
         sharedGameManager()->correct_count++;
         sharedGameManager()->score += scoreGet;
+        sharedGameManager()->difficulty_count++;
     }
 }
 
@@ -77,4 +80,8 @@ void game::timePassed(float dt) {
 
 void game::setHalo(int withHalo) {
     halo = withHalo;
+}
+
+void game::resetDifficultyCount() {
+    difficulty_count = 0;
 }
