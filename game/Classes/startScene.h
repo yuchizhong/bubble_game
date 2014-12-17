@@ -27,6 +27,7 @@ public:
     int selectedHalo;
     cocos2d::Sprite *halo[3];
     cocos2d::Vec2 haloPosn[3];
+    cocos2d::Label *haloLabel[2];
 };
 
 #endif
