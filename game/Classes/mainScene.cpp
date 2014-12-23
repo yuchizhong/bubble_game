@@ -49,15 +49,17 @@ bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
 void mainScene::bubbleLogic() {
     if (game::sharedGameManager()->difficulty_count <= 5) {
         generateBubble();
-    } else if (game::sharedGameManager()->difficulty_count <= 20) {
-        generateBubble();
-        if (getRand(0, 1) == 0) {
+        int r = getRand(0, 100);
+        if (r < 80) {
             generateBubble();
         }
     } else {
+        int r = getRand(0, 100);
         generateBubble();
-        generateBubble();
-        if (getRand(0, 1) == 0) {
+        if (r < 20) {
+            generateBubble();
+            generateBubble();
+        } else if (r < 60) {
             generateBubble();
         }
     }
@@ -170,9 +172,9 @@ bool mainScene::init()
     return true;
 }
 
-static float runningTime = 0.0;
-static float lastAddBubbleTime = 0.0;
-static int bubble_tag = 100;
+static double runningTime = 0.0;
+static double lastAddBubbleTime = 0.0;
+static long bubble_tag = 100;
 
 void mainScene::generateBubble() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -183,7 +185,8 @@ void mainScene::generateBubble() {
     float boundaryOffsetY = 80;
     
     float x, y, r;
-    while (true) {
+    int numTry = 0;
+    while (numTry < 1000) {
         r = 0.1 * resize_factor + 0.001 * resize_factor * (float)getRand(0, 20);
         float real_r = BUBBLE_RADIUS * r;
         x = real_r + getRand(boundaryOffsetX, visibleSize.width - 2.0 * real_r - boundaryOffsetX);
@@ -205,6 +208,10 @@ void mainScene::generateBubble() {
         if (shouldBreak) {
             break;
         }
+        numTry++;
+    }
+    if (numTry >= 1000) {
+        return;
     }
     string filename;
     static int rr = 0;
@@ -289,6 +296,9 @@ void mainScene::update(float tDelta) {
             break;
         }
     }
+    
+    if (bubbles.size() == 0)
+        generateBubble();
     
     int life = MAXERROR - game::sharedGameManager()->error_count;
     char lifeStr[2];

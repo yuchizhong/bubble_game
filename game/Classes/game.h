@@ -25,11 +25,11 @@ class game {
 public:
     int halo;
     int status;
-    int score;
+    long score;
     int error_count;
     int correct_count;
     int difficulty_count;
-    float time_passed;
+    double time_passed;
     
     static game* sharedGameManager();
     

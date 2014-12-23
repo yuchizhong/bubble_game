@@ -23,6 +23,8 @@ public:
     float current_r, r_rate;
     float current_angle, angle_rate;
     float timePassed;
+    int age; //0, 1, 2
+    int textureAge;
     cocos2d::Node *container;
     
     static bubble* create(string texture, float x, float y, float startingRadius, float rate, float dx, float dy);
