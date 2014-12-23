@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-#define BUBBLE_GAP 20
+#define BUBBLE_GAP 30
 
 static int getRand(int start, int end) {
     float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
@@ -174,7 +174,7 @@ bool mainScene::init()
 
 static double runningTime = 0.0;
 static double lastAddBubbleTime = 0.0;
-static long bubble_tag = 100;
+static int bubble_tag = 100;
 
 void mainScene::generateBubble() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -193,6 +193,7 @@ void mainScene::generateBubble() {
         y = real_r + getRand(boundaryOffsetY, visibleSize.height - 2.0 * real_r - boundaryOffsetY);
         bool shouldBreak = true;
         if (bubbles.size() == 0) {
+            //直接加
             break;
         }
         for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
