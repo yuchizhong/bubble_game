@@ -10,6 +10,8 @@
 #define __game__bubble__
 
 #define BUBBLE_RADIUS 230.0
+#define EXPLOSION_NUM_FRAMES 10
+#define EXPLOSION_FRAME_DELAY 0.1f
 
 #include <string>
 #include "cocos2d.h"
@@ -18,6 +20,7 @@ using namespace std;
 
 class bubble : public cocos2d::Sprite {
 public:
+    int bubble_type;
     float current_x, current_y;
     float delta_x, delta_y;
     float current_r, r_rate;
@@ -26,12 +29,14 @@ public:
     int age; //0, 1, 2
     int textureAge;
     cocos2d::Node *container;
+    cocos2d::Animate *explosion_animation;
     
-    static bubble* create(string texture, float x, float y, float startingRadius, float rate, float dx, float dy);
+    static bubble* create(int type, float x, float y, float startingRadius, float rate, float dx, float dy);
     void setRotation(float init_ro, float ro_rate);
     void update(float dt);
     
     void onDeath(bool punish);
+    void removeFromLayer(float dt);
     void onTouch();
 };
 

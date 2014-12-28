@@ -67,7 +67,7 @@ bool overScene::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
-    char fen[10];
+    char fen[10] = {0};
     sprintf(fen, "%d", game::sharedGameManager()->score);
     auto scoreLabel = LabelTTF::create("得分：" + string(fen), "Arial", 60);
     scoreLabel->setColor(Color3B(231, 179, 37));

@@ -8,6 +8,8 @@ USING_NS_CC;
 
 #define BUBBLE_GAP 30
 
+static int bubble_tag = 100;
+
 static int getRand(int start, int end) {
     float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
     return (int)i;
@@ -23,7 +25,10 @@ Scene* mainScene::createScene()
 
     // add layer as a child to scene
     scene->addChild(layer);
-
+    
+    //reset game data
+    bubble_tag = 100;
+    
     // return the scene
     return scene;
 }
@@ -174,7 +179,6 @@ bool mainScene::init()
 
 static double runningTime = 0.0;
 static double lastAddBubbleTime = 0.0;
-static int bubble_tag = 100;
 
 void mainScene::generateBubble() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -214,30 +218,16 @@ void mainScene::generateBubble() {
     if (numTry >= 1000) {
         return;
     }
-    string filename;
     static int rr = 0;
-    switch (rr) {
-        case 0:
-            filename = "pp1@2x.png";
-            break;
-            
-        case 1:
-            filename = "pp2@2x.png";
-            break;
-            
-        default:
-            filename = "pp3@2x.png";
-            break;
-    }
     rr++;
     if (rr == 3) {
         rr = 0;
     }
     
-    bubble *b = bubble::create(filename, x, y,
+    bubble *b = bubble::create(rr, x, y,
                                r, 0.1 + 0.001 * (float)getRand(0, 30),
                                10 - (float)getRand(0, 20), 10 - (float)getRand(0, 20));
-    b->setRotation((float)getRand(0, 360), 5 - (float)getRand(0, 10));
+    b->setRotation((float)getRand(0, 360), 5.0 - (float)getRand(0, 10));
     b->setTag(bubble_tag);
     bubble_tag++;
     b->container = this;
@@ -252,6 +242,7 @@ void mainScene::update(float tDelta) {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
     if (runningTime - lastAddBubbleTime >= 2.0) {
+        //do nothing
     }
     
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
@@ -302,12 +293,12 @@ void mainScene::update(float tDelta) {
         generateBubble();
     
     int life = MAXERROR - game::sharedGameManager()->error_count;
-    char lifeStr[2];
+    char lifeStr[2] = {0};
     sprintf(lifeStr, "%d", life);
     lifeLabel->setString("体力 " + string(lifeStr));
     
     long score = game::sharedGameManager()->score;
-    char scoreStr[10];
+    char scoreStr[10] = {0};
     sprintf(scoreStr, "%ld", score);
     scoreLabel->setString(string(scoreStr));
 }
