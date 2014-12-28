@@ -38,6 +38,7 @@ bubble* bubble::create(int type, float x, float y, float startingRadius, float r
         b->setPosition(b->current_x, b->current_y);
         b->setScale(b->current_r, b->current_r);
         
+        /*
         //initiate explosion animation
         auto animation = cocos2d::Animation::create();
         for(int i = 0; i < EXPLOSION_NUM_FRAMES; i++) {
@@ -50,6 +51,7 @@ bubble* bubble::create(int type, float x, float y, float startingRadius, float r
         animation->setLoops(1);
         auto action = cocos2d::Animate::create(animation);
         b->explosion_animation = action;
+         */
         
         return b;
     }
@@ -92,9 +94,13 @@ void bubble::removeFromLayer(float dt) {
 
 void bubble::onDeath(bool punish) {
     //remove bubble from layer at a count down
+    /*
     float countdown = EXPLOSION_NUM_FRAMES * EXPLOSION_FRAME_DELAY;
     scheduleOnce(schedule_selector(bubble::removeFromLayer), countdown);
     runAction(cocos2d::Sequence::create(explosion_animation, NULL));
+     */
+    //explosion textures not available
+    container->removeChildByTag(getTag());
     if (punish)
         game::sharedGameManager()->overOnError();
 }
