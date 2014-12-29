@@ -10,8 +10,8 @@
 #define __game__bubble__
 
 #define BUBBLE_RADIUS 230.0
-#define EXPLOSION_NUM_FRAMES 10
-#define EXPLOSION_FRAME_DELAY 0.1f
+#define EXPLOSION_NUM_FRAMES 31
+#define EXPLOSION_FRAME_DELAY (float)EXPLOSION_NUM_FRAMES / 0.5f
 
 #include <string>
 #include "cocos2d.h"
