@@ -9,14 +9,16 @@
 #include "bubble.h"
 #include "game.h"
 
-static string bubble_name[3];
-static string explosion_prefix[3];
+static string bubble_name[3] = {"BLUE", "PINK", "YELLOW"};
+static string explosion_prefix[3] = {"BLUE", "粉色爆炸", "黄色爆炸"};
 
 static int scores[3] = {5, 20, 50};
 
 bubble* bubble::create(int type, float x, float y, float startingRadius, float rate, float dx, float dy) {
     bubble *b = new (std::nothrow) bubble();
-    string texture = textures[type][0];
+    char filename[30] = {0};
+    sprintf(filename, "%s-PP%d.png", bubble_name[type].c_str(), 0);
+    string texture = string(filename);
     if (b && b->initWithFile(texture))
     {
         b->autorelease();
@@ -35,20 +37,18 @@ bubble* bubble::create(int type, float x, float y, float startingRadius, float r
         b->setPosition(b->current_x, b->current_y);
         b->setScale(b->current_r, b->current_r);
         
-        /*
         //initiate explosion animation
         auto animation = cocos2d::Animation::create();
-        for(int i = 0; i < EXPLOSION_NUM_FRAMES; i++) {
-            char filename[30] = {0};
-            sprintf(filename, "explosion_%d_%d.png", type, i);
-            animation->addSpriteFrameWithFile(filename);
+        for(int i = EXPLOSION_BEGIN_FRAME; i <= EXPLOSION_END_FRAME; i++) {
+            char expfilename[30] = {0};
+            sprintf(expfilename, "%s_%05d.png", explosion_prefix[type].c_str(), i);
+            animation->addSpriteFrameWithFile(string(expfilename));
         }
         animation->setDelayPerUnit(EXPLOSION_FRAME_DELAY);
         animation->setRestoreOriginalFrame(false);
         animation->setLoops(1);
         auto action = cocos2d::Animate::create(animation);
         b->explosion_animation = action;
-         */
         
         return b;
     }
@@ -70,9 +70,9 @@ void bubble::update(float dt) {
     timePassed += dt;
     
     //update age
-    age = timePassed / 3.0;
-    if (age > 2)
-        age = 2;
+    age = timePassed / 2.0;
+    if (age > MAX_AGE)
+        age = MAX_AGE;
     
     this->setPosition(this->current_x, this->current_y);
     this->setScale(this->current_r, this->current_r);
@@ -80,7 +80,9 @@ void bubble::update(float dt) {
     
     //update texture
     if (textureAge < age) {
-        this->setTexture(textures[bubble_type][age]);
+        char filename[30] = {0};
+        sprintf(filename, "%s-PP%d.png", bubble_name[this->bubble_type].c_str(), age);
+        this->setTexture(string(filename));
         textureAge = age;
     }
 }
@@ -91,11 +93,8 @@ void bubble::removeFromLayer(float dt) {
 
 void bubble::onDeath(bool punish) {
     //remove bubble from layer at a count down
-    /*
-    float countdown = EXPLOSION_NUM_FRAMES * EXPLOSION_FRAME_DELAY;
-    scheduleOnce(schedule_selector(bubble::removeFromLayer), countdown);
+    scheduleOnce(schedule_selector(bubble::removeFromLayer), EXPLOSION_REMOVE_DELAY);
     runAction(cocos2d::Sequence::create(explosion_animation, NULL));
-     */
     //explosion textures not available
     container->removeChildByTag(getTag());
     if (punish)
