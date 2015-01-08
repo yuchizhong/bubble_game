@@ -9,11 +9,8 @@
 #include "bubble.h"
 #include "game.h"
 
-static string textures[3][3] = {
-    {"pp1@2x.png", "pp2@2x.png", "pp3@2x.png"},
-    {"pp2@2x.png", "pp3@2x.png", "pp1@2x.png"},
-    {"pp3@2x.png", "pp1@2x.png", "pp2@2x.png"}
-};
+static string bubble_name[3];
+static string explosion_prefix[3];
 
 static int scores[3] = {5, 20, 50};
 
