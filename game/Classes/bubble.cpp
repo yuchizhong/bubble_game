@@ -10,9 +10,24 @@
 #include "game.h"
 
 static string bubble_name[3] = {"BLUE", "PINK", "YELLOW"};
-static string explosion_prefix[3] = {"BLUE", "粉色爆炸", "黄色爆炸"};
+static string explosion_prefix[3] = {"BLUE", "PINK", "YELLOW"};
 
-static int scores[3] = {5, 20, 50};
+static int scores[MAX_AGE + 1] = {5, 20, 40, 70, 100};
+
+void bubble::startCache() {
+    for (int type = 0; type < 3; type++) {
+        auto animation = cocos2d::Animation::create();
+        for(int i = EXPLOSION_BEGIN_FRAME; i <= EXPLOSION_END_FRAME; i++) {
+            char expfilename[30] = {0};
+            sprintf(expfilename, "%s_%05d.png", explosion_prefix[type].c_str(), i);
+            animation->addSpriteFrameWithFile(string(expfilename));
+        }
+        animation->setDelayPerUnit(EXPLOSION_FRAME_DELAY);
+        animation->setRestoreOriginalFrame(false);
+        animation->setLoops(1);
+        cocos2d::AnimationCache::getInstance()->addAnimation(animation, explosion_prefix[type]);
+    }
+}
 
 bubble* bubble::create(int type, float x, float y, float startingRadius, float rate, float dx, float dy) {
     bubble *b = new (std::nothrow) bubble();
@@ -36,19 +51,6 @@ bubble* bubble::create(int type, float x, float y, float startingRadius, float r
         
         b->setPosition(b->current_x, b->current_y);
         b->setScale(b->current_r, b->current_r);
-        
-        //initiate explosion animation
-        auto animation = cocos2d::Animation::create();
-        for(int i = EXPLOSION_BEGIN_FRAME; i <= EXPLOSION_END_FRAME; i++) {
-            char expfilename[30] = {0};
-            sprintf(expfilename, "%s_%05d.png", explosion_prefix[type].c_str(), i);
-            animation->addSpriteFrameWithFile(string(expfilename));
-        }
-        animation->setDelayPerUnit(EXPLOSION_FRAME_DELAY);
-        animation->setRestoreOriginalFrame(false);
-        animation->setLoops(1);
-        auto action = cocos2d::Animate::create(animation);
-        b->explosion_animation = action;
         
         return b;
     }
@@ -89,16 +91,19 @@ void bubble::update(float dt) {
 
 void bubble::removeFromLayer(float dt) {
     container->removeChildByTag(getTag());
+    
+    if (this->punishUser)
+        game::sharedGameManager()->overOnError();
 }
 
 void bubble::onDeath(bool punish) {
+    this->punishUser = punish;
+    
     //remove bubble from layer at a count down
     scheduleOnce(schedule_selector(bubble::removeFromLayer), EXPLOSION_REMOVE_DELAY);
-    runAction(cocos2d::Sequence::create(explosion_animation, NULL));
-    //explosion textures not available
-    container->removeChildByTag(getTag());
-    if (punish)
-        game::sharedGameManager()->overOnError();
+    auto animation = cocos2d::AnimationCache::getInstance()->getAnimation(explosion_prefix[this->bubble_type]);
+    auto action = cocos2d::Animate::create(animation);
+    runAction(cocos2d::Sequence::create(action, NULL));
 }
 
 void bubble::onTouch() {

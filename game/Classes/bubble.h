@@ -13,9 +13,9 @@
 #define BUBBLE_FILE_RADIUS 400.0
 #define EXPLOSION_BEGIN_FRAME 7
 #define EXPLOSION_END_FRAME 38
-#define EXPLOSION_REMOVE_DELAY 0.5f
+#define EXPLOSION_REMOVE_DELAY 1.0f
 #define EXPLOSION_NUM_FRAMES (EXPLOSION_END_FRAME - EXPLOSION_BEGIN_FRAME + 1)
-#define EXPLOSION_FRAME_DELAY (float)EXPLOSION_NUM_FRAMES / EXPLOSION_REMOVE_DELAY
+#define EXPLOSION_FRAME_DELAY EXPLOSION_REMOVE_DELAY / (float)EXPLOSION_NUM_FRAMES 
 
 #define MAX_AGE 4
 
@@ -35,9 +35,10 @@ public:
     int age; //0, 1, 2
     int textureAge;
     cocos2d::Node *container;
-    cocos2d::Animate *explosion_animation;
+    bool punishUser;
     
     static bubble* create(int type, float x, float y, float startingRadius, float rate, float dx, float dy);
+    static void startCache();
     void setRotation(float init_ro, float ro_rate);
     void update(float dt);
     

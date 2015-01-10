@@ -83,6 +83,8 @@ bool startScene::init()
         return false;
     }
     
+    bubble::startCache();
+    
     selectedHalo = 0;
     
     auto listener1 = EventListenerTouchOneByOne::create(); //创建一个触摸监听
