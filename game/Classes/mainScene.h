@@ -16,6 +16,9 @@ class mainScene : public cocos2d::Layer {
     cocos2d::LabelTTF *lifeLabel;
     cocos2d::LabelTTF *scoreLabel;
     
+    cocos2d::Sprite *pauseLabel;
+    cocos2d::Menu *pauseMenu;
+    
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();

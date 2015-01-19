@@ -17,7 +17,7 @@
 #define EXPLOSION_NUM_FRAMES (EXPLOSION_END_FRAME - EXPLOSION_BEGIN_FRAME + 1)
 #define EXPLOSION_FRAME_DELAY EXPLOSION_REMOVE_DELAY / (float)EXPLOSION_NUM_FRAMES 
 
-#define MAX_AGE 4
+#define MAX_AGE 2
 
 #include <string>
 #include "cocos2d.h"
@@ -43,8 +43,8 @@ public:
     void update(float dt);
     
     void onDeath(bool punish);
-    void removeFromLayer(float dt);
     void onTouch();
+    void removeFromLayer(float dt);
 };
 
 #endif /* defined(__game__bubble__) */

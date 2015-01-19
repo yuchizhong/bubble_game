@@ -35,6 +35,13 @@ Scene* mainScene::createScene()
 
 bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     Vec2 touchXY = touch->getLocation();
+    if (touchXY.x <= 40 && touchXY.y <= 40) {
+        //pause
+        game::sharedGameManager()->pause();
+        pauseLabel->setVisible(false);
+        pauseMenu->setVisible(true);
+        return false;
+    }
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
         float dx = abs((*it)->current_x - touchXY.x);
         float dy = abs((*it)->current_y - touchXY.y);
@@ -52,6 +59,21 @@ bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
 }
 
 void mainScene::bubbleLogic() {
+    if (game::sharedGameManager()->time_passed < 30.0) {
+        generateBubble();
+        int r = getRand(0, 100);
+        if (r < 10) {
+            generateBubble();
+        }
+    } else {
+        generateBubble();
+        int r = getRand(0, 100);
+        if (r < 20) {
+            generateBubble();
+        }
+    }
+    
+    /*
     if (game::sharedGameManager()->difficulty_count <= 5) {
         generateBubble();
         int r = getRand(0, 100);
@@ -68,6 +90,7 @@ void mainScene::bubbleLogic() {
             generateBubble();
         }
     }
+     */
 }
 
 // on "init" you need to initialize your instance
@@ -157,22 +180,24 @@ bool mainScene::init()
     scoreLabel = LabelTTF::create("0", "Arial", 26);
     scoreLabel->setPosition(Vec2(scoreImg->getContentSize().width / 1.5, scoreImg->getContentSize().height / 2.0 - 1));
     scoreImg->addChild(scoreLabel, 2);
-    /*
-    auto pauseItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(mainScene::menuCloseCallback, this));
     
-    pauseItem->setPosition(Vec2(20, 20));
+    pauseLabel = Sprite::create("pause.png", Rect(0, 0, 40, 40));
+    
+    pauseLabel->setPosition(Vec2(20, 20));
+    this->addChild(pauseLabel, 3);
     
     // create menu, it's an autorelease object
-    auto menu = Menu::create(pauseItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 2);
-    */
+    /*
+    pauseMenu = Menu::create(pauseItem, NULL);
+    pauseMenu->setPosition(Vec2::ZERO);
+    pauseMenu->setVisible(false);
+    this->addChild(pauseMenu, 3);
+     */
+    
     this->scheduleUpdate();
     
-    generateBubble();
+    for (int i = 0; i < 6; i++)
+        generateBubble();
     
     return true;
 }
@@ -237,13 +262,19 @@ void mainScene::generateBubble() {
 }
 
 void mainScene::update(float tDelta) {
+    if (game::sharedGameManager()->status != INGAME) {
+        return;
+    }
+    
     float tIntVal = tDelta * TIME_RATE;
     runningTime += tIntVal;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
+    /*
     if (runningTime - lastAddBubbleTime >= 2.0) {
         //do nothing
     }
+     */
     
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
         (*it)->update(tIntVal);
@@ -288,6 +319,8 @@ void mainScene::update(float tDelta) {
             break;
         }
     }
+    
+    game::sharedGameManager()->timePassed(tDelta);
     
     if (bubbles.size() == 0)
         generateBubble();

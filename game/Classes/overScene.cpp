@@ -68,11 +68,18 @@ bool overScene::init()
     this->addChild(menu, 1);
     
     char fen[10] = {0};
-    sprintf(fen, "%d", game::sharedGameManager()->score);
+    sprintf(fen, "%ld", game::sharedGameManager()->score);
     auto scoreLabel = LabelTTF::create("得分：" + string(fen), "Arial", 60);
     scoreLabel->setColor(Color3B(231, 179, 37));
     scoreLabel->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 1.5));
     this->addChild(scoreLabel, 1);
+    
+    char hfen[10] = {0};
+    sprintf(hfen, "%ld", game::sharedGameManager()->getHighScore());
+    auto hscoreLabel = LabelTTF::create("最高分：" + string(hfen), "Arial", 50);
+    hscoreLabel->setColor(Color3B(231, 179, 37));
+    hscoreLabel->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 1.5 - 100));
+    this->addChild(hscoreLabel, 1);
     
     return true;
 }

@@ -55,21 +55,32 @@ void game::correct(int scoreGet) {
 }
 
 bool game::overOnError() {
-    if (sharedGameManager()->status == INGAME) {
-        sharedGameManager()->error_count++;
-        if (sharedGameManager()->error_count >= MAXERROR) {
-            gameOver();
-            return true;
-        }
+    if (sharedGameManager()->error_count >= MAXERROR) {
+        gameOver();
+        return true;
     }
     return false;
 }
 
+void game::getError() {
+    if (sharedGameManager()->status == INGAME) {
+        sharedGameManager()->error_count++;
+        if (sharedGameManager()->error_count > MAXERROR) {
+            sharedGameManager()->error_count = MAXERROR;
+        }
+    }
+}
+
 void game::gameOver() {
+    //save highest score
+    if (getHighScore() < score)
+        setHighScore(score);
+    
     sharedGameManager()->status = GAMEOVER;
     auto director = cocos2d::Director::getInstance();
     auto scene = overScene::createScene();
-    director->replaceScene(scene);
+    auto trans = cocos2d::TransitionJumpZoom::create(1.0f, scene);
+    director->replaceScene(trans);
 }
 
 void game::timePassed(float dt) {
@@ -84,4 +95,13 @@ void game::setHalo(int withHalo) {
 
 void game::resetDifficultyCount() {
     difficulty_count = 0;
+}
+
+void game::setHighScore(long high) {
+    cocos2d::UserDefault::getInstance()->setIntegerForKey("highScore", (int)high);
+}
+
+long game::getHighScore() {
+    long high = cocos2d::UserDefault::getInstance()->getIntegerForKey("highScore", 0);
+    return high;
 }

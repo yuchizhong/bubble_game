@@ -12,7 +12,7 @@
 static string bubble_name[3] = {"BLUE", "PINK", "YELLOW"};
 static string explosion_prefix[3] = {"BLUE", "PINK", "YELLOW"};
 
-static int scores[MAX_AGE + 1] = {5, 20, 40, 70, 100};
+static int scores[MAX_AGE + 1] = {10, 20, 50};
 
 void bubble::startCache() {
     for (int type = 0; type < 3; type++) {
@@ -99,6 +99,9 @@ void bubble::removeFromLayer(float dt) {
 void bubble::onDeath(bool punish) {
     this->punishUser = punish;
     
+    if (punish)
+        game::sharedGameManager()->getError();
+    
     //remove bubble from layer at a count down
     scheduleOnce(schedule_selector(bubble::removeFromLayer), EXPLOSION_REMOVE_DELAY);
     auto animation = cocos2d::AnimationCache::getInstance()->getAnimation(explosion_prefix[this->bubble_type]);
@@ -107,7 +110,12 @@ void bubble::onDeath(bool punish) {
 }
 
 void bubble::onTouch() {
-    container->removeChildByTag(getTag());
     int scoreToEarn = scores[age];
     game::sharedGameManager()->correct(scoreToEarn);
+    
+    //remove bubble from layer at a count down
+    scheduleOnce(schedule_selector(bubble::removeFromLayer), EXPLOSION_REMOVE_DELAY);
+    auto animation = cocos2d::AnimationCache::getInstance()->getAnimation(explosion_prefix[this->bubble_type]);
+    auto action = cocos2d::Animate::create(animation);
+    runAction(cocos2d::Sequence::create(action, NULL));
 }

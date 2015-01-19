@@ -38,10 +38,14 @@ public:
     void resume();
     void correct(int scoreGet);
     bool overOnError();
+    void getError();
     void gameOver();
     void timePassed(float dt);
     void setHalo(int withHalo);
     void resetDifficultyCount();
+    
+    void setHighScore(long high);
+    long getHighScore();
 };
 
 #endif
