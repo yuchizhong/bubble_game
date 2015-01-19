@@ -105,6 +105,7 @@
 		AB1CF6A41A2CBEE700339E6F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CF6A31A2CBEE700339E6F /* CoreMotion.framework */; };
 		AB1CF6A81A2CBEF800339E6F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CF6A71A2CBEF800339E6F /* UIKit.framework */; };
 		AB1CF6AA1A2CBEFE00339E6F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CF6A91A2CBEFE00339E6F /* OpenGLES.framework */; };
+		AB31A0551A6CFF5C0091E3DC /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = AB31A0541A6CFF5C0091E3DC /* pause.png */; };
 		AB4A18111A611E9D006959A7 /* PINK_00007.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4A17F11A611E9D006959A7 /* PINK_00007.png */; };
 		AB4A18121A611E9D006959A7 /* PINK_00008.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4A17F21A611E9D006959A7 /* PINK_00008.png */; };
 		AB4A18131A611E9D006959A7 /* PINK_00009.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4A17F31A611E9D006959A7 /* PINK_00009.png */; };
@@ -430,6 +431,7 @@
 		AB1CF6A31A2CBEE700339E6F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		AB1CF6A71A2CBEF800339E6F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		AB1CF6A91A2CBEFE00339E6F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		AB31A0541A6CFF5C0091E3DC /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		AB4A17F11A611E9D006959A7 /* PINK_00007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PINK_00007.png; sourceTree = "<group>"; };
 		AB4A17F21A611E9D006959A7 /* PINK_00008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PINK_00008.png; sourceTree = "<group>"; };
 		AB4A17F31A611E9D006959A7 /* PINK_00009.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PINK_00009.png; sourceTree = "<group>"; };
@@ -718,6 +720,7 @@
 				AB14D3321A5E3929008B1236 /* bubbles */,
 				ABDE7B9D1A31AEE60024E01D /* 开始游戏larged.png */,
 				ABEF29041A2F580400BAB142 /* Images.xcassets */,
+				AB31A0541A6CFF5C0091E3DC /* pause.png */,
 				ABDE7B7E1A31A2900024E01D /* fire.png */,
 				ABDE7B7F1A31A2900024E01D /* heath+.png */,
 				ABDE7B831A31A2900024E01D /* slow.png */,
@@ -1156,6 +1159,7 @@
 				AB4A18591A611F2F006959A7 /* YELLOW_00015.png in Resources */,
 				AB4A18131A611E9D006959A7 /* PINK_00009.png in Resources */,
 				AB4A18681A611F2F006959A7 /* YELLOW_00030.png in Resources */,
+				AB31A0551A6CFF5C0091E3DC /* pause.png in Resources */,
 				AB14D3DE1A5E3929008B1236 /* BLUE_00016.png in Resources */,
 				AB4A18551A611F2F006959A7 /* YELLOW_00011.png in Resources */,
 				AB14D3D81A5E3929008B1236 /* BLUE_00010.png in Resources */,

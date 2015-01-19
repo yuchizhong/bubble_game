@@ -26,8 +26,8 @@ Scene* overScene::createScene()
 }
 
 bool overScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-    Vec2 touchXY = touch->getLocation();
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    //Vec2 touchXY = touch->getLocation();
+    //Size visibleSize = Director::getInstance()->getVisibleSize();
     
     return false;
 }

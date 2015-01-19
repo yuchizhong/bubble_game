@@ -28,6 +28,8 @@ public:
     void bubbleLogic();
     void generateBubble();
     
+    void resumeGame(cocos2d::Ref *pSender);
+    
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     

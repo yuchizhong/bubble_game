@@ -42,17 +42,19 @@ bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event
         pauseMenu->setVisible(true);
         return false;
     }
-    for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
-        float dx = abs((*it)->current_x - touchXY.x);
-        float dy = abs((*it)->current_y - touchXY.y);
-        float distance = sqrt(dx * dx + dy * dy);
-        float collide_distance = BUBBLE_RADIUS * (*it)->current_r;
-        if (distance <= collide_distance) {
-            bubbles.remove(*it);
-            (*it)->onTouch();
-            //this->removeChildByTag((*it)->getTag());
-            bubbleLogic();
-            break;
+    if (game::sharedGameManager()->status == INGAME) {
+        for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
+            float dx = abs((*it)->current_x - touchXY.x);
+            float dy = abs((*it)->current_y - touchXY.y);
+            float distance = sqrt(dx * dx + dy * dy);
+            float collide_distance = BUBBLE_RADIUS * (*it)->current_r;
+            if (distance <= collide_distance) {
+                bubbles.remove(*it);
+                (*it)->onTouch();
+                //this->removeChildByTag((*it)->getTag());
+                bubbleLogic();
+                break;
+            }
         }
     }
     return false;
@@ -187,12 +189,15 @@ bool mainScene::init()
     this->addChild(pauseLabel, 3);
     
     // create menu, it's an autorelease object
-    /*
+    auto pauseItem = MenuItemImage::create(
+                                           "开始游戏.png",
+                                           "开始游戏larged.png",
+                                           CC_CALLBACK_1(mainScene::resumeGame, this));
+    
     pauseMenu = Menu::create(pauseItem, NULL);
-    pauseMenu->setPosition(Vec2::ZERO);
+    pauseMenu->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     pauseMenu->setVisible(false);
     this->addChild(pauseMenu, 3);
-     */
     
     this->scheduleUpdate();
     
@@ -200,6 +205,12 @@ bool mainScene::init()
         generateBubble();
     
     return true;
+}
+
+void mainScene::resumeGame(cocos2d::Ref *pSender) {
+    game::sharedGameManager()->resume();
+    pauseLabel->setVisible(true);
+    pauseMenu->setVisible(false);
 }
 
 static double runningTime = 0.0;
