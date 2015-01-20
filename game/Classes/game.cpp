@@ -79,7 +79,7 @@ void game::gameOver() {
     sharedGameManager()->status = GAMEOVER;
     auto director = cocos2d::Director::getInstance();
     auto scene = overScene::createScene();
-    auto trans = cocos2d::TransitionJumpZoom::create(1.0f, scene);
+    auto trans = cocos2d::TransitionMoveInR::create(0.75f, scene);
     director->replaceScene(trans);
 }
 

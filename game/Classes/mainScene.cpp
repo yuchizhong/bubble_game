@@ -35,7 +35,7 @@ Scene* mainScene::createScene()
 
 bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     Vec2 touchXY = touch->getLocation();
-    if (touchXY.x <= 40 && touchXY.y <= 40) {
+    if (touchXY.x <= 60 && touchXY.y <= 60) {
         //pause
         game::sharedGameManager()->pause();
         pauseLabel->setVisible(false);
@@ -183,9 +183,9 @@ bool mainScene::init()
     scoreLabel->setPosition(Vec2(scoreImg->getContentSize().width / 1.5, scoreImg->getContentSize().height / 2.0 - 1));
     scoreImg->addChild(scoreLabel, 2);
     
-    pauseLabel = Sprite::create("pause.png", Rect(0, 0, 40, 40));
+    pauseLabel = Sprite::create("pause.png");
     
-    pauseLabel->setPosition(Vec2(20, 20));
+    pauseLabel->setPosition(Vec2(25, 25));
     this->addChild(pauseLabel, 3);
     
     // create menu, it's an autorelease object
