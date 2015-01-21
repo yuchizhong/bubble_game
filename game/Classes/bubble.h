@@ -9,8 +9,11 @@
 #ifndef __game__bubble__
 #define __game__bubble__
 
+//only 266 pixels radius in 400 file radius
+//|edge|---134px---|--------266px--------|center|
 #define BUBBLE_RADIUS 266.0
 #define BUBBLE_FILE_RADIUS 400.0
+
 #define EXPLOSION_BEGIN_FRAME 7
 #define EXPLOSION_END_FRAME 38
 #define EXPLOSION_REMOVE_DELAY 1.0f
