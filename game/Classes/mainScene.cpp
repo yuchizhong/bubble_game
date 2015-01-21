@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-#define BUBBLE_GAP 30
+#define BUBBLE_GAP 50
 
 static int bubble_tag = 100;
 
@@ -35,7 +35,7 @@ Scene* mainScene::createScene()
 
 bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
     Vec2 touchXY = touch->getLocation();
-    if (touchXY.x <= 60 && touchXY.y <= 60) {
+    if (game::sharedGameManager()->status == INGAME && touchXY.x <= 60 && touchXY.y <= 60) {
         //pause
         game::sharedGameManager()->pause();
         pauseLabel->setVisible(false);
@@ -201,9 +201,6 @@ bool mainScene::init()
     
     this->scheduleUpdate();
     
-    for (int i = 0; i < 6; i++)
-        generateBubble();
-    
     return true;
 }
 
@@ -263,7 +260,6 @@ void mainScene::generateBubble() {
     bubble *b = bubble::create(rr, x, y,
                                r, 0.1 + 0.001 * (float)getRand(0, 30),
                                10 - (float)getRand(0, 20), 10 - (float)getRand(0, 20));
-    b->setRotation((float)getRand(0, 360), 5.0 - (float)getRand(0, 10));
     b->setTag(bubble_tag);
     bubble_tag++;
     b->container = this;
@@ -272,20 +268,22 @@ void mainScene::generateBubble() {
     lastAddBubbleTime = runningTime;
 }
 
+int genBubbleCount = 0;
+
 void mainScene::update(float tDelta) {
     if (game::sharedGameManager()->status != INGAME) {
         return;
     }
     
+    //6 bubbles on start
+    if (genBubbleCount < 6) {
+        generateBubble();
+        genBubbleCount++;
+    }
+    
     float tIntVal = tDelta * TIME_RATE;
     runningTime += tIntVal;
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    
-    /*
-    if (runningTime - lastAddBubbleTime >= 2.0) {
-        //do nothing
-    }
-     */
     
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
         (*it)->update(tIntVal);

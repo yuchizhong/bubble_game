@@ -39,7 +39,7 @@ public:
     
     static bubble* create(int type, float x, float y, float startingRadius, float rate, float dx, float dy);
     static void startCache();
-    void setRotation(float init_ro, float ro_rate);
+    void setMyRotation(float init_ro, float ro_rate);
     void update(float dt);
     
     void onDeath(bool punish);

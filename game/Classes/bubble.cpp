@@ -14,6 +14,11 @@ static string explosion_prefix[3] = {"BLUE", "PINK", "YELLOW"};
 
 static int scores[MAX_AGE + 1] = {10, 20, 50};
 
+static int getRand(int start, int end) {
+    float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
+    return (int)i;
+}
+
 void bubble::startCache() {
     for (int type = 0; type < 3; type++) {
         auto animation = cocos2d::Animation::create();
@@ -52,13 +57,20 @@ bubble* bubble::create(int type, float x, float y, float startingRadius, float r
         b->setPosition(b->current_x, b->current_y);
         b->setScale(b->current_r, b->current_r);
         
+        b->setMyRotation((float)getRand(0, 360), 5.0 - (float)getRand(0, 10));
+        
+        //start action
+        b->setOpacity(0);
+        cocos2d::FadeIn *fin = cocos2d::FadeIn::create(0.3f);
+        b->runAction(fin);
+        
         return b;
     }
     CC_SAFE_DELETE(b);
     return nullptr;
 }
 
-void bubble::setRotation(float init_ro, float ro_rate) {
+void bubble::setMyRotation(float init_ro, float ro_rate) {
     current_angle = init_ro;
     angle_rate = ro_rate;
     this->cocos2d::Sprite::setRotation(current_angle);
@@ -76,8 +88,8 @@ void bubble::update(float dt) {
     if (age > MAX_AGE)
         age = MAX_AGE;
     
-    this->setPosition(this->current_x, this->current_y);
-    this->setScale(this->current_r, this->current_r);
+    this->cocos2d::Sprite::setPosition(this->current_x, this->current_y);
+    this->cocos2d::Sprite::setScale(this->current_r, this->current_r);
     this->cocos2d::Sprite::setRotation(current_angle);
     
     //update texture
