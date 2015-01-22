@@ -31,31 +31,32 @@ Scene* mainScene::createScene()
     return scene;
 }
 
-bool mainScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) {
-    Vec2 touchXY = touch->getLocation();
-    if (game::sharedGameManager()->status == INGAME && touchXY.x <= 60 && touchXY.y <= 60) {
-        //pause
-        game::sharedGameManager()->pause();
-        pauseLabel->setVisible(false);
-        pauseMenu->setVisible(true);
-        return false;
-    }
-    if (game::sharedGameManager()->status == INGAME) {
-        for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
-            float dx = abs((*it)->current_x - touchXY.x);
-            float dy = abs((*it)->current_y - touchXY.y);
-            float distance = sqrt(dx * dx + dy * dy);
-            float collide_distance = BUBBLE_RADIUS * (*it)->current_r;
-            if (distance <= collide_distance) {
-                bubbles.remove(*it);
-                (*it)->onTouch();
-                //this->removeChildByTag((*it)->getTag());
-                bubbleLogic();
-                break;
+void mainScene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event) {
+    for (int i = 0; i < touches.size(); i++) {
+        Vec2 touchXY = touches[i]->getLocation();
+        if (game::sharedGameManager()->status == INGAME && touchXY.x <= 60 && touchXY.y <= 60) {
+            //pause
+            game::sharedGameManager()->pause();
+            pauseLabel->setVisible(false);
+            pauseMenu->setVisible(true);
+            break;
+        }
+        if (game::sharedGameManager()->status == INGAME) {
+            for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
+                float dx = abs((*it)->current_x - touchXY.x);
+                float dy = abs((*it)->current_y - touchXY.y);
+                float distance = sqrt(dx * dx + dy * dy);
+                float collide_distance = BUBBLE_RADIUS * (*it)->current_r;
+                if (distance <= collide_distance) {
+                    bubbles.remove(*it);
+                    (*it)->onTouch();
+                    //this->removeChildByTag((*it)->getTag());
+                    bubbleLogic();
+                    break;
+                }
             }
         }
     }
-    return false;
 }
 
 void mainScene::bubbleLogic() {
@@ -111,9 +112,8 @@ bool mainScene::init()
     unsigned long int rand_seed = psv.tv_sec * 1000 + psv.tv_usec / 1000;
     srand((int)rand_seed);
     
-    auto listener1 = EventListenerTouchOneByOne::create(); //创建一个触摸监听
-    listener1->setSwallowTouches(false); //设置是否想下传递触摸
-    listener1->onTouchBegan = CC_CALLBACK_2(mainScene::onTouchBegan, this);
+    auto listener1 = EventListenerTouchAllAtOnce::create(); //创建一个触摸监听
+    listener1->onTouchesBegan = CC_CALLBACK_2(mainScene::onTouchesBegan, this);
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
     
     Size visibleSize = Director::getInstance()->getVisibleSize();

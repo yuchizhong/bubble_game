@@ -36,7 +36,7 @@ public:
     
     virtual void update(float tDelta);
     
-    virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event);
+    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 };
 
 #endif
