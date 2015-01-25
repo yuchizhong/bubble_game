@@ -60,16 +60,21 @@ void mainScene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 }
 
 void mainScene::bubbleLogic() {
+    //达到8个泡泡后就不增加了
+    if (bubbles.size() >= 8) {
+        return;
+    }
+    
     if (game::sharedGameManager()->time_passed < 30.0) {
         generateBubble();
         int r = getRand(0, 100);
-        if (r < 10) {
+        if (r < 5) {
             generateBubble();
         }
     } else {
         generateBubble();
         int r = getRand(0, 100);
-        if (r < 20) {
+        if (r < 10) {
             generateBubble();
         }
     }
@@ -241,8 +246,9 @@ void mainScene::update(float tDelta) {
     }
     
     //6 bubbles on start
-    if (genBubbleCount < 6) {
-        generateBubble();
+    if (genBubbleCount <= 20) {
+        if (genBubbleCount % 10 == 0)
+            generateBubble();
         genBubbleCount++;
     }
     
