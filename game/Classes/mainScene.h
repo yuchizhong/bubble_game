@@ -15,6 +15,8 @@ class mainScene : public cocos2d::Layer {
     
     cocos2d::LabelTTF *lifeLabel;
     cocos2d::LabelTTF *scoreLabel;
+    cocos2d::LabelTTF *haloLabel;
+    cocos2d::Sprite *haloButton;
     
     cocos2d::Sprite *pauseLabel;
     cocos2d::Menu *pauseMenu;

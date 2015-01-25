@@ -21,6 +21,7 @@ game* game::sharedGameManager() {
         _manager->correct_count = 0;
         _manager->time_passed = 0;
         _manager->difficulty_count = 0;
+        _manager->halo_active = false;
     }
     return _manager;
 }
@@ -32,6 +33,7 @@ void game::start() {
     sharedGameManager()->correct_count = 0;
     sharedGameManager()->time_passed = 0;
     sharedGameManager()->difficulty_count = 0;
+    sharedGameManager()->halo_active = false;
     
     auto director = cocos2d::Director::getInstance();
     auto scene = mainScene::createScene();
@@ -104,4 +106,11 @@ void game::setHighScore(long high) {
 long game::getHighScore() {
     long high = cocos2d::UserDefault::getInstance()->getIntegerForKey("highScore", 0);
     return high;
+}
+
+void game::activateHalo() {
+    if (halo_active)
+        return;
+    halo_active = true;
+    CCLOG("halo activate");
 }

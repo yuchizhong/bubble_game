@@ -24,6 +24,8 @@ using namespace std;
 class game {
 public:
     int halo;
+    bool halo_active;
+    
     int status;
     long score;
     int error_count;
@@ -43,6 +45,8 @@ public:
     void timePassed(float dt);
     void setHalo(int withHalo);
     void resetDifficultyCount();
+    
+    void activateHalo();
     
     void setHighScore(long high);
     long getHighScore();

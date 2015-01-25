@@ -34,13 +34,22 @@ Scene* mainScene::createScene()
 void mainScene::onTouchesBegan(const std::vector<Touch*>& touches, Event *event) {
     for (int i = 0; i < touches.size(); i++) {
         Vec2 touchXY = touches[i]->getLocation();
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        
+        //pause
         if (game::sharedGameManager()->status == INGAME && touchXY.x <= 60 && touchXY.y <= 60) {
-            //pause
             game::sharedGameManager()->pause();
             pauseLabel->setVisible(false);
             pauseMenu->setVisible(true);
             break;
         }
+        
+        //halo
+        if (game::sharedGameManager()->status == INGAME && touchXY.x <= 220 && touchXY.y >= visibleSize.height - 100) {
+            game::sharedGameManager()->activateHalo();
+        }
+        
+        //bubble
         if (game::sharedGameManager()->status == INGAME) {
             for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
                 float dx = abs((*it)->current_x - touchXY.x);
@@ -78,25 +87,6 @@ void mainScene::bubbleLogic() {
             generateBubble();
         }
     }
-    
-    /*
-    if (game::sharedGameManager()->difficulty_count <= 5) {
-        generateBubble();
-        int r = getRand(0, 100);
-        if (r < 80) {
-            generateBubble();
-        }
-    } else {
-        int r = getRand(0, 100);
-        generateBubble();
-        if (r < 20) {
-            generateBubble();
-            generateBubble();
-        } else if (r < 60) {
-            generateBubble();
-        }
-    }
-     */
 }
 
 // on "init" you need to initialize your instance
@@ -130,6 +120,7 @@ bool mainScene::init()
     sprite->setScale(visibleSize.height/1920.0, visibleSize.height/1920.0);
     this->addChild(sprite, 0);
     
+    //life
     auto lifeImg = Sprite::create("生命.png");
     lifeImg->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height - 60));
     this->addChild(lifeImg, 2);
@@ -138,6 +129,7 @@ bool mainScene::init()
     lifeLabel->setPosition(Vec2(lifeImg->getContentSize().width / 1.5, lifeImg->getContentSize().height / 2.0 - 1));
     lifeImg->addChild(lifeLabel, 2);
     
+    //score
     auto scoreImg = Sprite::create("分数.png");
     scoreImg->setPosition(Vec2(visibleSize.width - 110, visibleSize.height - 60));
     this->addChild(scoreImg, 2);
@@ -146,12 +138,22 @@ bool mainScene::init()
     scoreLabel->setPosition(Vec2(scoreImg->getContentSize().width / 1.5, scoreImg->getContentSize().height / 2.0 - 1));
     scoreImg->addChild(scoreLabel, 2);
     
+    //halo
+    haloButton = Sprite::create("道具.png");
+    haloButton->setPosition(Vec2(110, visibleSize.height - 60));
+    this->addChild(haloButton, 2);
+    
+    haloLabel = LabelTTF::create("道具", "Arial", 26);
+    haloLabel->setPosition(Vec2(haloButton->getContentSize().width / 1.5, haloButton->getContentSize().height / 2.0 - 1));
+    haloButton->addChild(haloLabel, 2);
+    
+    //pause
     pauseLabel = Sprite::create("pause.png");
     
     pauseLabel->setPosition(Vec2(25, 25));
     this->addChild(pauseLabel, 3);
     
-    // create menu, it's an autorelease object
+    //pause menu
     auto pauseItem = MenuItemImage::create(
                                            "开始游戏.png",
                                            "开始游戏larged.png",
