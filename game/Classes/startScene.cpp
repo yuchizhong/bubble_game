@@ -9,6 +9,9 @@ USING_NS_CC;
 #define HALO_POSN_1 visibleSize.height/2 + 100
 #define HALO_POSN_2 visibleSize.height/2 + 300
 
+static string haloName[3] = {"减速", "回复", "爆炸"};
+static string haloDescription[3] = {"减速", "回复", "爆炸"};
+
 Scene* startScene::createScene()
 {
     // 'scene' is an autorelease object
@@ -70,6 +73,10 @@ bool startScene::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_even
                 break;
         }
     }
+    
+    haloLabel[0]->setString(haloName[selectedHalo]);
+    haloLabel[1]->setString(haloDescription[selectedHalo]);
+    
     return false;
 }
 
@@ -126,6 +133,13 @@ bool startScene::init()
     this->addChild(halo[0], 1);
     this->addChild(halo[1], 1);
     this->addChild(halo[2], 1);
+    
+    haloLabel[0] = LabelTTF::create(haloName[0], "Arial", 50);
+    haloLabel[1] = LabelTTF::create(haloDescription[0], "Arial", 35);
+    haloLabel[0]->setPosition(Vec2(visibleSize.width/2, HALO_POSN_1 - 160));
+    haloLabel[1]->setPosition(Vec2(visibleSize.width/2, HALO_POSN_1 - 210));
+    this->addChild(haloLabel[0], 2);
+    this->addChild(haloLabel[1], 2);
     
     return true;
 }

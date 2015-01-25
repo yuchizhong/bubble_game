@@ -9,7 +9,7 @@ USING_NS_CC;
 #define BUBBLE_GAP 50
 
 static int bubble_tag = 100;
-static int genBubbleCount = 0;
+static int genInitialBubbleCount = 0;
 
 static int getRand(int start, int end) {
     float i = CCRANDOM_0_1()*(end-start+1)+start;  //产生一个从start到end间的随机数
@@ -110,7 +110,7 @@ bool mainScene::init()
     }
     
     bubble_tag = 100;
-    genBubbleCount = 0;
+    genInitialBubbleCount = 0;
     
     timeval psv;
     gettimeofday(&psv, NULL);
@@ -246,10 +246,10 @@ void mainScene::update(float tDelta) {
     }
     
     //6 bubbles on start
-    if (genBubbleCount <= 20) {
-        if (genBubbleCount % 10 == 0)
+    if (genInitialBubbleCount <= 40) {
+        if (genInitialBubbleCount % 20 == 0)
             generateBubble();
-        genBubbleCount++;
+        genInitialBubbleCount++;
     }
     
     float tIntVal = tDelta * TIME_RATE;
