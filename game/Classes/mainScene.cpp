@@ -262,7 +262,7 @@ void mainScene::update(float tDelta) {
     
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
         if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active)
-            (*it)->update(tIntVal / 2.0);
+            (*it)->update(tIntVal / 3.0);
         else
             (*it)->update(tIntVal);
     }
