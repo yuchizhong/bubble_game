@@ -1,4 +1,5 @@
 #include "mainScene.h"
+#include "startScene.h"
 #include <stdio.h>
 #include <cstdlib>
 #include <stdlib.h>
@@ -143,7 +144,7 @@ bool mainScene::init()
     haloButton->setPosition(Vec2(110, visibleSize.height - 60));
     this->addChild(haloButton, 2);
     
-    haloLabel = LabelTTF::create("道具", "Arial", 26);
+    haloLabel = LabelTTF::create(haloName[game::sharedGameManager()->halo], "Arial", 28);
     haloLabel->setPosition(Vec2(haloButton->getContentSize().width / 1.5, haloButton->getContentSize().height / 2.0 - 1));
     haloButton->addChild(haloLabel, 2);
     
@@ -258,8 +259,16 @@ void mainScene::update(float tDelta) {
     runningTime += tIntVal;
     Size visibleSize = Director::getInstance()->getVisibleSize();
     
+    
     for (list<bubble*>::iterator it = bubbles.begin(); it != bubbles.end(); it++) {
-        (*it)->update(tIntVal);
+        if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active)
+            (*it)->update(tIntVal / 2.0);
+        else
+            (*it)->update(tIntVal);
+    }
+    
+    if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active && game::sharedGameManager()->halo_time_passed > 5.0) {
+        game::sharedGameManager()->deactivateHalo();
     }
     
     //boundary
@@ -316,4 +325,11 @@ void mainScene::update(float tDelta) {
     char scoreStr[10] = {0};
     sprintf(scoreStr, "%ld", score);
     scoreLabel->setString(string(scoreStr));
+    
+    //halo
+    if (game::sharedGameManager()->halo_active) {
+        haloButton->setScale(1.2, 1.2);
+    } else {
+        haloButton->setScale(1.0, 1.0);
+    }
 }

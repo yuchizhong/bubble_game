@@ -9,8 +9,8 @@ USING_NS_CC;
 #define HALO_POSN_1 visibleSize.height/2 + 100
 #define HALO_POSN_2 visibleSize.height/2 + 300
 
-static string haloName[3] = {"减速", "回复", "爆炸"};
-static string haloDescription[3] = {"减速", "回复", "爆炸"};
+string haloName[3] = {"减速", "回复", "爆炸"};
+string haloDescription[3] = {"减速", "回复", "爆炸"};
 
 Scene* startScene::createScene()
 {

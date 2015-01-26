@@ -30,4 +30,7 @@ public:
     cocos2d::LabelTTF *haloLabel[2];
 };
 
+extern string haloName[3];
+extern string haloDescription[3];
+
 #endif

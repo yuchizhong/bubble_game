@@ -25,6 +25,7 @@ class game {
 public:
     int halo;
     bool halo_active;
+    double halo_time_passed;
     
     int status;
     long score;
@@ -47,6 +48,7 @@ public:
     void resetDifficultyCount();
     
     void activateHalo();
+    void deactivateHalo();
     
     void setHighScore(long high);
     long getHighScore();

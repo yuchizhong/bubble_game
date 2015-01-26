@@ -88,6 +88,9 @@ void game::gameOver() {
 void game::timePassed(float dt) {
     if (sharedGameManager()->status == INGAME) {
         sharedGameManager()->time_passed += dt;
+        if (halo_active) {
+            sharedGameManager()->halo_time_passed += dt;
+        }
     }
 }
 
@@ -112,5 +115,9 @@ void game::activateHalo() {
     if (halo_active)
         return;
     halo_active = true;
-    CCLOG("halo activate");
+    halo_time_passed = 0.0;
+}
+
+void game::deactivateHalo() {
+    halo_active = false;
 }
