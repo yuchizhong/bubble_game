@@ -140,17 +140,25 @@ bool mainScene::init()
     scoreImg->addChild(scoreLabel, 2);
     
     //halo
-    haloButton = Sprite::create("道具.png");
+    haloButtonGray = Sprite::create("道具.png");
+    haloButtonGray->setPosition(Vec2(110, visibleSize.height - 60));
+    graySprite(haloButtonGray);
+    this->addChild(haloButtonGray, 2);
+    
+    haloButton = ProgressTimer::create(Sprite::create("道具.png"));
     haloButton->setPosition(Vec2(110, visibleSize.height - 60));
+    haloButton->setBarChangeRate(Point(1,0));       //设置进程条的变化速率
+    haloButton->setType(ProgressTimer::Type::BAR);  //设置进程条的类型
+    haloButton->setMidpoint(Point(0,1));            //设置进度的运动方向
+    haloButton->setPercentage(0.0f);                //设置初始值为0
     this->addChild(haloButton, 2);
     
     haloLabel = LabelTTF::create(haloName[game::sharedGameManager()->halo], "Arial", 28);
-    haloLabel->setPosition(Vec2(haloButton->getContentSize().width / 1.5, haloButton->getContentSize().height / 2.0 - 1));
+    haloLabel->setPosition(Vec2(haloButton->getContentSize().width / 1.43, haloButton->getContentSize().height / 2.0 - 2));
     haloButton->addChild(haloLabel, 2);
     
     //pause
     pauseLabel = Sprite::create("pause.png");
-    
     pauseLabel->setPosition(Vec2(25, 25));
     this->addChild(pauseLabel, 3);
     
@@ -267,7 +275,7 @@ void mainScene::update(float tDelta) {
             (*it)->update(tIntVal);
     }
     
-    if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active && game::sharedGameManager()->halo_time_passed > 5.0) {
+    if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active && game::sharedGameManager()->halo_time_passed >= 5.0) {
         game::sharedGameManager()->deactivateHalo();
     }
     
@@ -328,8 +336,25 @@ void mainScene::update(float tDelta) {
     
     //halo
     if (game::sharedGameManager()->halo_active) {
-        haloButton->setScale(1.2, 1.2);
+        haloButton->setScale(1.15, 1.15);
+        haloButtonGray->setScale(1.15, 1.15);
+        haloButton->setPercentage(100.0 * (5.0 - game::sharedGameManager()->halo_time_passed) / 5.0);
     } else {
         haloButton->setScale(1.0, 1.0);
+        haloButtonGray->setScale(1.0, 1.0);
+        haloButton->setPercentage(100.0 * (game::sharedGameManager()->halo_time_passed / 10.0));
+    }
+}
+
+void mainScene::graySprite(cocos2d::Sprite *sprite) {
+    if (sprite) {
+        cocos2d::GLProgram *p = new cocos2d::GLProgram();
+        p->initWithFilenames("gray.vsh", "gray.fsh");
+        p->bindAttribLocation(cocos2d::GLProgram::ATTRIBUTE_NAME_POSITION, cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+        p->bindAttribLocation(cocos2d::GLProgram::ATTRIBUTE_NAME_COLOR, cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
+        p->bindAttribLocation(cocos2d::GLProgram::ATTRIBUTE_NAME_TEX_COORD, cocos2d::GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        p->link();
+        p->updateUniforms();
+        sprite->setGLProgram(p);
     }
 }

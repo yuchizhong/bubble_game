@@ -16,7 +16,8 @@ class mainScene : public cocos2d::Layer {
     cocos2d::LabelTTF *lifeLabel;
     cocos2d::LabelTTF *scoreLabel;
     cocos2d::LabelTTF *haloLabel;
-    cocos2d::Sprite *haloButton;
+    cocos2d::Sprite *haloButtonGray;
+    cocos2d::ProgressTimer *haloButton;
     
     cocos2d::Sprite *pauseLabel;
     cocos2d::Menu *pauseMenu;
@@ -39,6 +40,8 @@ public:
     virtual void update(float tDelta);
     
     virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    
+    void graySprite(cocos2d::Sprite *sprite);
 };
 
 #endif

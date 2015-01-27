@@ -88,8 +88,11 @@ void game::gameOver() {
 void game::timePassed(float dt) {
     if (sharedGameManager()->status == INGAME) {
         sharedGameManager()->time_passed += dt;
-        if (halo_active) {
-            sharedGameManager()->halo_time_passed += dt;
+        sharedGameManager()->halo_time_passed += dt;
+        if (!sharedGameManager()->halo_active) {
+            if (sharedGameManager()->halo_time_passed > 10.0) {
+                sharedGameManager()->halo_time_passed = 10.0;
+            }
         }
     }
 }
@@ -114,10 +117,14 @@ long game::getHighScore() {
 void game::activateHalo() {
     if (halo_active)
         return;
+    if (!halo_active && halo_time_passed < 10.0)
+        return;
+    
     halo_active = true;
     halo_time_passed = 0.0;
 }
 
 void game::deactivateHalo() {
     halo_active = false;
+    halo_time_passed = 0.0;
 }
