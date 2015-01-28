@@ -140,9 +140,9 @@ bool mainScene::init()
     scoreImg->addChild(scoreLabel, 2);
     
     //halo
-    haloButtonGray = Sprite::create("道具.png");
+    haloButtonGray = Sprite::create("道具gray.png");
     haloButtonGray->setPosition(Vec2(110, visibleSize.height - 60));
-    graySprite(haloButtonGray);
+    //graySprite(haloButtonGray);
     this->addChild(haloButtonGray, 2);
     
     haloButton = ProgressTimer::create(Sprite::create("道具.png"));

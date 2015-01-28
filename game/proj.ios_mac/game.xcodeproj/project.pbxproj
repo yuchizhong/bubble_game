@@ -191,6 +191,7 @@
 		ABDE7B9C1A31AD910024E01D /* startScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABDE7B9A1A31AD910024E01D /* startScene.cpp */; };
 		ABDE7B9E1A31AEE60024E01D /* 开始游戏larged.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDE7B9D1A31AEE60024E01D /* 开始游戏larged.png */; };
 		ABDE7B9F1A31B05B0024E01D /* startScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABDE7B9A1A31AD910024E01D /* startScene.cpp */; };
+		ABE9CE431A789DCC008DEDF5 /* 道具gray.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE9CE421A789DCC008DEDF5 /* 道具gray.png */; };
 		ABEF29051A2F580400BAB142 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABEF29041A2F580400BAB142 /* Images.xcassets */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -520,6 +521,7 @@
 		ABDE7B9A1A31AD910024E01D /* startScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = startScene.cpp; sourceTree = "<group>"; };
 		ABDE7B9B1A31AD910024E01D /* startScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = startScene.h; sourceTree = "<group>"; };
 		ABDE7B9D1A31AEE60024E01D /* 开始游戏larged.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开始游戏larged.png"; sourceTree = "<group>"; };
+		ABE9CE421A789DCC008DEDF5 /* 道具gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "道具gray.png"; sourceTree = "<group>"; };
 		ABEF29041A2F580400BAB142 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "game iOS/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -737,6 +739,7 @@
 				ABDE7B881A31A2900024E01D /* 生命.png */,
 				ABDE7B891A31A2900024E01D /* 返回.png */,
 				ABDE7B8A1A31A2900024E01D /* 道具.png */,
+				ABE9CE421A789DCC008DEDF5 /* 道具gray.png */,
 				ABDE7B8B1A31A2900024E01D /* 音符.png */,
 			);
 			name = Resources;
@@ -1183,6 +1186,7 @@
 				AB4A18621A611F2F006959A7 /* YELLOW_00024.png in Resources */,
 				ABDE7B971A31A2900024E01D /* 返回.png in Resources */,
 				AB4A18671A611F2F006959A7 /* YELLOW_00029.png in Resources */,
+				ABE9CE431A789DCC008DEDF5 /* 道具gray.png in Resources */,
 				AB14D3AD1A5E3929008B1236 /* PINK-PP2.png in Resources */,
 				AB14D3E01A5E3929008B1236 /* BLUE_00018.png in Resources */,
 				AB14D3E91A5E3929008B1236 /* BLUE_00027.png in Resources */,
