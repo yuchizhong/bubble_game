@@ -22,6 +22,7 @@ game* game::sharedGameManager() {
         _manager->time_passed = 0;
         _manager->difficulty_count = 0;
         _manager->halo_active = false;
+        _manager->halo_time_passed = 0.0;
     }
     return _manager;
 }
@@ -34,6 +35,7 @@ void game::start() {
     sharedGameManager()->time_passed = 0;
     sharedGameManager()->difficulty_count = 0;
     sharedGameManager()->halo_active = false;
+    sharedGameManager()->halo_time_passed = 0.0;
     
     auto director = cocos2d::Director::getInstance();
     auto scene = mainScene::createScene();

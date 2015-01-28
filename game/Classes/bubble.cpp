@@ -123,8 +123,9 @@ void bubble::onDeath(bool punish) {
 
 void bubble::onTouch() {
     int scoreToEarn = scores[age];
-    CCLOG("GET %ld score", scoreToEarn);
     game::sharedGameManager()->correct(scoreToEarn);
+    
+    //fly to score animation
     
     //remove bubble from layer at a count down
     scheduleOnce(schedule_selector(bubble::removeFromLayer), EXPLOSION_REMOVE_DELAY);

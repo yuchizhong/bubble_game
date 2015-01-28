@@ -14,6 +14,9 @@
 #define BUBBLE_RADIUS 266.0
 #define BUBBLE_FILE_RADIUS 400.0
 
+//fly to score on touch
+#define FLY_TO_SCORE_DURATION 0.5f
+
 #define EXPLOSION_BEGIN_FRAME 7
 #define EXPLOSION_END_FRAME 38
 #define EXPLOSION_REMOVE_DELAY 1.0f
