@@ -75,18 +75,23 @@ void mainScene::bubbleLogic() {
         return;
     }
     
-    if (game::sharedGameManager()->time_passed < 30.0) {
-        generateBubble();
+    int gen_bubble_count = 1;
+    if (game::sharedGameManager()->halo == 0 && game::sharedGameManager()->halo_active) {
+        //no-op
+    } else if (game::sharedGameManager()->time_passed < 30.0) {
         int r = getRand(0, 100);
         if (r < 5) {
-            generateBubble();
+            gen_bubble_count++;
         }
     } else {
-        generateBubble();
         int r = getRand(0, 100);
         if (r < 10) {
-            generateBubble();
+            gen_bubble_count++;
         }
+    }
+    
+    for (int i = 0; i < gen_bubble_count; i++) {
+        generateBubble();
     }
 }
 
